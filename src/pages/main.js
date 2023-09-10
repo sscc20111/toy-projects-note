@@ -18,7 +18,7 @@ const Main = () => {
     return (
         <Container>
             <Row md="auto">
-            {projects.map((projects, idx) => (
+                {projects.map((projects, idx) => (
                     <Col key={projects.projectName}>
                         <Link to={`/projects/${projects.projectName}`}>
                             <Card
@@ -35,7 +35,7 @@ const Main = () => {
                             </Card>
                         </Link>
                     </Col>
-            ))}
+                ))}
             </Row>
         </Container>
     );
