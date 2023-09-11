@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Button, CloseButton, Container } from 'react-bootstrap';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
@@ -11,9 +12,10 @@ import './css/media.css';
 import './css/style.css';
 import Popup from './js/popup';
 
-const NoteApp = () => {
+const Note = () => {
     const inputRef = useRef(null);
     const [dataUser, setUser] = useState('');
+    const navigate = useNavigate()
 
     useEffect(() => {
         inputRef.current.focus();
@@ -27,8 +29,10 @@ const NoteApp = () => {
         e.preventDefault()
         const popup = new Popup();
 
-        if(dataUser != ""){
-            console.log(dataUser)
+        if(dataUser !== ""){
+            console.log(dataUser);
+            localStorage.setItem('UserName', dataUser);
+            navigate('/projects/note/Apppage');
         }else{
             popup.alertNoText();
         }
@@ -66,9 +70,9 @@ const NoteApp = () => {
                         ref={inputRef}
                         value={dataUser}
                         onChange={(e) => setUser(e.target.value)} />
-                        <Button variant="primary" type="submit">
-                            <FontAwesomeIcon icon={faPaperPlane} />
-                        </Button>
+                            <Button variant="primary" type='submit'>
+                                <FontAwesomeIcon icon={faPaperPlane} />
+                            </Button>
                     </form>
                 </div>
             </Row>
@@ -80,4 +84,4 @@ const NoteApp = () => {
     );
 }
 
-export default NoteApp;
+export default Note;
