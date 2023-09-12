@@ -2,18 +2,64 @@ import React, { useEffect, useRef, useState } from 'react';
 import { Button, CloseButton, Container, Figure, FormLabel, ListGroup, ListGroupItem } from 'react-bootstrap';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import FormRange from 'react-bootstrap/esm/FormRange';
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlus, faUserPlus, faUserEdit, faListUl, faPaintBrush, faSave, faPalette, faFile } from "@fortawesome/free-solid-svg-icons";
+import { faPlus, faUserPlus, faUserEdit, faListUl, faPaintBrush, faSave, faPalette, faFile, faCheck } from "@fortawesome/free-solid-svg-icons";
 
 import '../css/common.css';
 import './css/todostyle.css';
 import './css/media.css';
-import FormRange from 'react-bootstrap/esm/FormRange';
+import Lists from './js/todo.js'
+
+
 
 
 const NoteApp = () => {
+const storedArrayString = localStorage.getItem('list');
+const storedArray = JSON.parse(storedArrayString);
+
     const [ListText, setText] = useState('');
+    const [ListData, setList] = useState(storedArray);
+    const [dataUser, setData] = useState(localStorage.getItem('UserName'));
+    const [UserName, setUser] = useState(localStorage.getItem('UserName'));
+    const [isRegisterFormVisible, setIsRegisterFormVisible] = useState(false);
+    
+    const toggleForms = () => {
+        setIsRegisterFormVisible(!isRegisterFormVisible);
+    };
+    const UserNameChange = () => {
+        const UserInput = document.querySelector('.userName__input');
+        UserInput.classList.add('show')
+        toggleForms();
+        
+        setUser('')
+    }
+    const UserNameDataChange = () => {
+        const UserInput = document.querySelector('.userName__input');
+        UserInput.classList.remove('show')
+        toggleForms();
+
+        setUser(dataUser);
+        localStorage.setItem('UserName', dataUser);
+    }
+
+    const ListPush = (ListText) => {
+        if(ListData == null){
+            setList([ListText]);
+        }else{
+            setList([...ListData,ListText]);
+        }
+        setText('')
+        
+    }
+    useEffect(() => {
+        localStoragePush()
+    }, [ListPush]);
+    
+    const localStoragePush = () => {
+        localStorage.setItem('list', JSON.stringify(ListData));
+    }
 
     return (
         <Container>
@@ -23,20 +69,25 @@ const NoteApp = () => {
                         <p>please type some words in the text box.</p>
                         <CloseButton className='close'></CloseButton>
                     </div>
-                    <div className='lists'></div>
+                    <div className='lists'><Lists ListItem={ListData}/></div>
                     <div className='completed__lists hide'></div>
                     <div className='todolist__typebox'>
                         <input type="text" className="todolist__input" value={ListText} onChange={(e) => setText(e.target.value)} />
-                        <Button className='todolist__btn'><FontAwesomeIcon icon={faPlus}></FontAwesomeIcon></Button>
+                        <Button className='todolist__btn' onClick={() => ListPush(ListText)}><FontAwesomeIcon icon={faPlus} /></Button>
                     </div>
                     <div className=''></div>
                 </Col>
                 <Col className='todolist__info'>
                     <header>
                         <input type="file" accept="image/*" className="img-upload"></input>
-                        <Figure className='profile__img'><FontAwesomeIcon icon={faUserPlus}></FontAwesomeIcon></Figure>
-                        <h2 className='todo_user'></h2>
-                        <FontAwesomeIcon icon={faUserEdit}></FontAwesomeIcon>
+                        <Figure className='profile__img'><FontAwesomeIcon icon={faUserPlus} /></Figure>
+                        <h2 className='todo_user'>{UserName}</h2>
+                        {isRegisterFormVisible ? (
+                            <FontAwesomeIcon icon={faCheck} className='fa-user-edit checked' onClick={UserNameDataChange} />
+                            ) : (
+                            <FontAwesomeIcon icon={faUserEdit} className='fa-user-edit' onClick={UserNameChange} />
+                        )}
+                        <input type='text' className='userName__input' value={dataUser} onChange={(e) => setData(e.target.value)}></input>
                     </header>
                     <div className='weahter'>
                         <p className='temperature'></p>
@@ -47,8 +98,8 @@ const NoteApp = () => {
                     </div>
                     <div className='drawing__tool'></div>
                     <Row className='palette__tool'>
-                        <Col className='palette'><FontAwesomeIcon icon={faPalette}></FontAwesomeIcon></Col>
-                        <Col className='new-layer'><FontAwesomeIcon icon={faFile}></FontAwesomeIcon></Col>
+                        <Col className='palette'><FontAwesomeIcon icon={faPalette} /></Col>
+                        <Col className='new-layer'><FontAwesomeIcon icon={faFile} /></Col>
                     </Row>
                     <ul className='color'>
                         <li className='colors'></li>
@@ -60,10 +111,10 @@ const NoteApp = () => {
                     <FormLabel></FormLabel>
                     <FormRange className='controller'></FormRange>
                     <Row className='app'>
-                        <Col className='todo'><FontAwesomeIcon icon={faListUl}></FontAwesomeIcon></Col>
-                        <Col className='draw'><FontAwesomeIcon icon={faPaintBrush}></FontAwesomeIcon></Col>
+                        <Col className='todo'><FontAwesomeIcon icon={faListUl} /></Col>
+                        <Col className='draw'><FontAwesomeIcon icon={faPaintBrush} /></Col>
                     </Row>
-                    <div className='save-btn'><FontAwesomeIcon icon={faSave}></FontAwesomeIcon></div>
+                    <div className='save-btn'><FontAwesomeIcon icon={faSave} /></div>
                 </Col>
             </Row>
         </Container>

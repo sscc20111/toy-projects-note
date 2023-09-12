@@ -721,6 +721,9 @@ header{
     transition: transform .3s ease-in-out;
     cursor: pointer;
 }
+.fa-user-edit.checked{
+    pointer-events: all;
+}
 .fa-user-edit:hover{
     color: tomato;
     transform: scale(1.2);
