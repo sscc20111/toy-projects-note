@@ -11,6 +11,7 @@ import './css/common.css';
 import './css/media.css';
 import './css/style.css';
 import Popup from './js/popup';
+import Clock from './App/js/clock';
 
 const Note = () => {
     const inputRef = useRef(null);
@@ -21,10 +22,6 @@ const Note = () => {
         inputRef.current.focus();
     }, []);
     
-    const date = new Date();
-    const hours = date.getHours();
-    const minutes = date.getMinutes();
-
     const Appstart = (e) =>{
         e.preventDefault()
         const popup = new Popup();
@@ -58,7 +55,7 @@ const Note = () => {
                 <Col>
                     <div className='message-one'>Hello, There! 👋🏻</div>
                     <div className='message-two'>What's your name?</div>
-                    <span className='ms-time'>{`${hours < 10 ? `0${hours}` : hours}:${minutes < 10 ? `0${minutes}` : minutes}`}</span>
+                    <Clock type='main' />
                 </Col>
             </Row>
             <Row className='user-wrap'>

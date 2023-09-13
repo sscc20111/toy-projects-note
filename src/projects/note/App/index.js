@@ -1,5 +1,5 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { Button, CloseButton, Container, Figure, FormLabel, ListGroup, ListGroupItem } from 'react-bootstrap';
+import React, { useEffect, useState } from 'react';
+import { Button, CloseButton, Container, Figure, FormLabel } from 'react-bootstrap';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import FormRange from 'react-bootstrap/esm/FormRange';
@@ -11,7 +11,8 @@ import '../css/common.css';
 import './css/todostyle.css';
 import './css/media.css';
 import Lists from './js/todo.js'
-
+import Clock from './js/clock';
+import Popup from '../js/popup';
 
 
 
@@ -45,18 +46,27 @@ const storedArray = JSON.parse(storedArrayString);
     }
 
     const ListPush = (ListText) => {
-        if(ListData == null){
-            setList([ListText]);
+        const popup = new Popup();
+        if(ListText === ''){
+            popup.alertNoText();
         }else{
-            setList([...ListData,ListText]);
+            if(ListData == null){
+                setList([ListText]);
+            }else{
+                setList([...ListData,ListText]);
+            }
+            setText('')
         }
-        setText('')
         
     }
     useEffect(() => {
-        localStoragePush()
+        localStoragePush();
     }, [ListPush]);
-    
+    const Popclose = (e) => {
+        e.preventDefault()
+        const popup = new Popup();
+        popup.removeAlert();
+    }
     const localStoragePush = () => {
         localStorage.setItem('list', JSON.stringify(ListData));
     }
@@ -67,7 +77,7 @@ const storedArray = JSON.parse(storedArrayString);
                 <Col className='todolist show'>
                     <div className='alert__text'>
                         <p>please type some words in the text box.</p>
-                        <CloseButton className='close'></CloseButton>
+                        <CloseButton className='close' onClick={Popclose}></CloseButton>
                     </div>
                     <div className='lists'><Lists ListItem={ListData}/></div>
                     <div className='completed__lists hide'></div>
@@ -93,8 +103,7 @@ const storedArray = JSON.parse(storedArrayString);
                         <p className='temperature'></p>
                     </div>
                     <div className='time'>
-                        <p className="date">TUE, FEB 6</p>
-                        <h3 className="currentTime">14:15</h3>
+                        <Clock type='todo' />
                     </div>
                     <div className='drawing__tool'></div>
                     <Row className='palette__tool'>
