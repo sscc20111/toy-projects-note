@@ -5,13 +5,14 @@ import Col from 'react-bootstrap/Col';
 import FormRange from 'react-bootstrap/esm/FormRange';
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlus, faUserPlus, faUserEdit, faListUl, faPaintBrush, faSave, faPalette, faFile, faCheck } from "@fortawesome/free-solid-svg-icons";
+import { faPlus, faUserEdit, faListUl, faPaintBrush, faSave, faPalette, faFile, faCheck } from "@fortawesome/free-solid-svg-icons";
 
 import '../css/common.css';
 import './css/todostyle.css';
 import './css/media.css';
 import Lists from './js/todo.js'
 import Clock from './js/clock';
+import ImgApp from './js/img';
 import Popup from '../js/popup';
 
 
@@ -89,8 +90,7 @@ const storedArray = JSON.parse(storedArrayString);
                 </Col>
                 <Col className='todolist__info'>
                     <header>
-                        <input type="file" accept="image/*" className="img-upload"></input>
-                        <Figure className='profile__img'><FontAwesomeIcon icon={faUserPlus} /></Figure>
+                        <ImgApp />
                         <h2 className='todo_user'>{UserName}</h2>
                         {isRegisterFormVisible ? (
                             <FontAwesomeIcon icon={faCheck} className='fa-user-edit checked' onClick={UserNameDataChange} />
