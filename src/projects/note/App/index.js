@@ -13,6 +13,7 @@ import './css/media.css';
 import Lists from './js/todo.js'
 import Clock from './js/clock';
 import ImgApp from './js/img';
+import Weather from './js/weather';
 import Popup from '../js/popup';
 
 
@@ -99,9 +100,7 @@ const storedArray = JSON.parse(storedArrayString);
                         )}
                         <input type='text' className='userName__input' value={dataUser} onChange={(e) => setData(e.target.value)}></input>
                     </header>
-                    <div className='weahter'>
-                        <p className='temperature'></p>
-                    </div>
+                    <Weather />
                     <div className='time'>
                         <Clock type='todo' />
                     </div>

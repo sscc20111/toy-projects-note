@@ -537,7 +537,7 @@ header{
     color: #fff;
     text-align: center;
 }
-.weahter{
+.weather{
     position: relative;
     background-color: #3e4e72;
     /* background: linear-gradient(0deg, rgba(0,17,60,1) 0%, rgba(54,64,69,1) 100%); */
@@ -553,14 +553,14 @@ header{
     color: #fff;
     font-weight: 700;
 }
-.weahter img{
+.weather img{
     position: absolute;
     width: 60px;
     height: 60px;
     right: 5%;
     bottom: 5%;
 }
-.weahter p:last-child{
+.weather p:last-child{
     font-size: 13px;
     color: #fff;
     position: absolute;
@@ -568,7 +568,7 @@ header{
     left: 30%;
     font-weight: 300;
 }
-.weahter h4{
+.weather h4{
     position: absolute;
     top: 12%;
     color: #fff;
