@@ -255,6 +255,7 @@ main{
     transform: translateY(-5px);
 }
 .brush-btn svg{
+    pointer-events: none;
     position: absolute;
     transition: all .3s ease-out;
 }
@@ -276,6 +277,7 @@ main{
     transform: translateY(-5px);
 }
 .fill-btn svg{
+    pointer-events: none;
     position: absolute;
     transition: all .3s ease-out;
 }

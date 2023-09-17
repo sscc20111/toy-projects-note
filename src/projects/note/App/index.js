@@ -1,16 +1,17 @@
 import React, { useEffect, useState } from 'react';
-import { Button, CloseButton, Container, Figure, FormLabel } from 'react-bootstrap';
+import { Button, CloseButton, Container } from 'react-bootstrap';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import FormRange from 'react-bootstrap/esm/FormRange';
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlus, faUserEdit, faListUl, faPaintBrush, faSave, faPalette, faFile, faCheck } from "@fortawesome/free-solid-svg-icons";
+import { faPlus, faUserEdit, faCheck } from "@fortawesome/free-solid-svg-icons";
 
 import '../css/common.css';
 import './css/todostyle.css';
 import './css/media.css';
 import Lists from './js/todo.js'
+import Draw from './js/draw';
+import Tools from './js/tool';
 import Clock from './js/clock';
 import ImgApp from './js/img';
 import Weather from './js/weather';
@@ -27,20 +28,16 @@ const storedArray = JSON.parse(storedArrayString);
     const [dataUser, setData] = useState(localStorage.getItem('UserName'));
     const [UserName, setUser] = useState(localStorage.getItem('UserName'));
     const [isRegisterFormVisible, setIsRegisterFormVisible] = useState(false);
+    const [canvasOpen, setCanvasOpen] = useState(false);
     
     const toggleForms = () => {
         setIsRegisterFormVisible(!isRegisterFormVisible);
     };
     const UserNameChange = () => {
-        const UserInput = document.querySelector('.userName__input');
-        UserInput.classList.add('show')
         toggleForms();
-        
         setUser('')
     }
     const UserNameDataChange = () => {
-        const UserInput = document.querySelector('.userName__input');
-        UserInput.classList.remove('show')
         toggleForms();
 
         setUser(dataUser);
@@ -73,10 +70,18 @@ const storedArray = JSON.parse(storedArrayString);
         localStorage.setItem('list', JSON.stringify(ListData));
     }
 
+    const handleCanvasOpen = () => {
+        setCanvasOpen(true);
+    };
+
+    const handleCanvasClose = () => {
+        setCanvasOpen(false);
+    };
+
     return (
         <Container>
             <Row>
-                <Col className='todolist show'>
+                <Col className={`todolist ${canvasOpen ? 'hide' : 'show'}`}>
                     <div className='alert__text'>
                         <p>please type some words in the text box.</p>
                         <CloseButton className='close' onClick={Popclose}></CloseButton>
@@ -89,6 +94,9 @@ const storedArray = JSON.parse(storedArrayString);
                     </div>
                     <div className=''></div>
                 </Col>
+                <Col className={`drawcontainer ${canvasOpen ? 'show' : 'hide'}`} style={{padding: 0}}>
+                    <Draw></Draw>
+                </Col>
                 <Col className='todolist__info'>
                     <header>
                         <ImgApp />
@@ -98,31 +106,11 @@ const storedArray = JSON.parse(storedArrayString);
                             ) : (
                             <FontAwesomeIcon icon={faUserEdit} className='fa-user-edit' onClick={UserNameChange} />
                         )}
-                        <input type='text' className='userName__input' value={dataUser} onChange={(e) => setData(e.target.value)}></input>
+                        <input type='text' className={`userName__input ${isRegisterFormVisible ? 'show' : ''}`} value={dataUser} onChange={(e) => setData(e.target.value)}></input>
                     </header>
                     <Weather />
-                    <div className='time'>
-                        <Clock type='todo' />
-                    </div>
-                    <div className='drawing__tool'></div>
-                    <Row className='palette__tool'>
-                        <Col className='palette'><FontAwesomeIcon icon={faPalette} /></Col>
-                        <Col className='new-layer'><FontAwesomeIcon icon={faFile} /></Col>
-                    </Row>
-                    <ul className='color'>
-                        <li className='colors'></li>
-                        <li className='colors'></li>
-                        <li className='colors'></li>
-                        <li className='colors'></li>
-                        <li className='colors'></li>
-                    </ul>
-                    <FormLabel></FormLabel>
-                    <FormRange className='controller'></FormRange>
-                    <Row className='app'>
-                        <Col className='todo'><FontAwesomeIcon icon={faListUl} /></Col>
-                        <Col className='draw'><FontAwesomeIcon icon={faPaintBrush} /></Col>
-                    </Row>
-                    <div className='save-btn'><FontAwesomeIcon icon={faSave} /></div>
+                    <Clock type='todo' />
+                    <Tools canvasOpen={canvasOpen} handleCanvasOpen={handleCanvasOpen} handleCanvasClose={handleCanvasClose} />
                 </Col>
             </Row>
         </Container>

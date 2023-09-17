@@ -37,7 +37,9 @@ const Clock = (props) => {
 
     return(
         <>
-            {ClockApp}
+            <div className='time'>
+                {ClockApp}
+            </div>
         </>
     ) 
 }
