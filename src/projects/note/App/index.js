@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef  } from 'react';
 import { Button, CloseButton, Container } from 'react-bootstrap';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
@@ -29,6 +29,7 @@ const storedArray = JSON.parse(storedArrayString);
     const [UserName, setUser] = useState(localStorage.getItem('UserName'));
     const [isRegisterFormVisible, setIsRegisterFormVisible] = useState(false);
     const [canvasOpen, setCanvasOpen] = useState(false);
+    const childRef = useRef();
     
     const toggleForms = () => {
         setIsRegisterFormVisible(!isRegisterFormVisible);
@@ -72,11 +73,14 @@ const storedArray = JSON.parse(storedArrayString);
 
     const handleCanvasOpen = () => {
         setCanvasOpen(true);
+        childRef.current.initCanvas();
     };
 
     const handleCanvasClose = () => {
         setCanvasOpen(false);
     };
+
+
 
     return (
         <Container>
@@ -95,7 +99,7 @@ const storedArray = JSON.parse(storedArrayString);
                     <div className=''></div>
                 </Col>
                 <Col className={`drawcontainer ${canvasOpen ? 'show' : 'hide'}`} style={{padding: 0}}>
-                    <Draw></Draw>
+                    <Draw ref={childRef}></Draw>
                 </Col>
                 <Col className='todolist__info'>
                     <header>

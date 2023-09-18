@@ -319,8 +319,10 @@ main{
     transform: scale(0);
     transition: transform .3s ease-in-out;
 }
-.palette:hover i{
+.palette svg{
     transition: all .3s ease-out;
+}
+.palette:hover svg{
     transform: translateY(-5px);
 }
 .new-layer{
@@ -337,8 +339,10 @@ main{
     transform: scale(0);
     transition: transform .3s ease-in-out;
 }
-.new-layer:hover i{
+.new-layer svg{
     transition: all .3s ease-out;
+}
+.new-layer:hover svg{
     transform: translateY(-5px);
 }
 .color{

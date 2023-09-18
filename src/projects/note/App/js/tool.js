@@ -9,6 +9,7 @@ import FormRange from 'react-bootstrap/esm/FormRange';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faListUl, faPaintBrush, faSave, faPalette, faFile } from "@fortawesome/free-solid-svg-icons";
 
+
 const Tools = ({ handleCanvasOpen, handleCanvasClose }) => {
     const [ToolsOpen, setToolsOpen] = useState(false);
     const [ColorOpen, setColorOpen] = useState(false);
@@ -34,6 +35,7 @@ const Tools = ({ handleCanvasOpen, handleCanvasClose }) => {
     const handleToolsClose = () => {
         setToolsOpen(false);
     };
+
 
 
     return(
