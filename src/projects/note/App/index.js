@@ -88,6 +88,13 @@ const storedArray = JSON.parse(storedArrayString);
     const drawColorSet = (targetColor) => {
         childRef.current.colorChange(targetColor);
     }
+    const drawRange = (e) => {
+        const targetvalue = e.target.value;
+        drawRangeSet(targetvalue);
+    }
+    const drawRangeSet = (targetvalue) => {
+        childRef.current.rangeChange(targetvalue);
+    }
 
     return (
         <Container>
@@ -106,7 +113,7 @@ const storedArray = JSON.parse(storedArrayString);
                     <div className=''></div>
                 </Col>
                 <Col className={`drawcontainer ${canvasOpen ? 'show' : 'hide'}`} style={{padding: 0}}>
-                    <Draw ref={childRef} drawColorSet={drawColorSet}></Draw>
+                    <Draw ref={childRef} drawColorSet={drawColorSet} drawRange={drawRangeSet}></Draw>
                 </Col>
                 <Col className='todolist__info'>
                     <header>
@@ -121,7 +128,7 @@ const storedArray = JSON.parse(storedArrayString);
                     </header>
                     <Weather />
                     <Clock type='todo' />
-                    <Tools canvasOpen={canvasOpen} drawColor={drawColor} handleCanvasOpen={handleCanvasOpen} handleCanvasClose={handleCanvasClose} />
+                    <Tools canvasOpen={canvasOpen} drawRange={drawRange} drawColor={drawColor} handleCanvasOpen={handleCanvasOpen} handleCanvasClose={handleCanvasClose} />
                 </Col>
             </Row>
         </Container>

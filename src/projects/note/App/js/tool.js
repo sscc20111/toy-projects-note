@@ -10,7 +10,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faListUl, faPaintBrush, faSave, faPalette, faFile } from "@fortawesome/free-solid-svg-icons";
 
 
-const Tools = ({ handleCanvasOpen, handleCanvasClose, drawColor }) => {
+const Tools = ({ handleCanvasOpen, handleCanvasClose, drawColor, drawRange }) => {
     const [ToolsOpen, setToolsOpen] = useState(false);
     const [ColorOpen, setColorOpen] = useState(false);
     const [Focused, setFocused] = useState(false);
@@ -36,8 +36,8 @@ const Tools = ({ handleCanvasOpen, handleCanvasClose, drawColor }) => {
         setToolsOpen(false);
     };
 
-    const ramgetest = () => {
-        console.log(e)
+    const ramgetest = (e) => {
+        console.log(e.target.value)
     }
 
     // const drawColorSet = (e) => {
@@ -49,6 +49,21 @@ const Tools = ({ handleCanvasOpen, handleCanvasClose, drawColor }) => {
 
     return(
         <>
+            <Row>
+                <Col>
+                    <ul className={`color ${ColorOpen ? 'scaleToOne' : ''}`}>
+                        <li className='colors' style={{ backgroundColor:'#E17055' }} onClick={(e) => {drawColor(e)}}></li>
+                        <li className='colors' style={{ backgroundColor:'#FDCB6E' }} onClick={(e) => {drawColor(e)}}></li>
+                        <li className='colors' style={{ backgroundColor:'#00B894' }} onClick={(e) => {drawColor(e)}}></li>
+                        <li className='colors' style={{ backgroundColor:'#2F61D2' }} onClick={(e) => {drawColor(e)}}></li>
+                        <li className='colors' style={{ backgroundColor:'#6C5CE7' }} onClick={(e) => {drawColor(e)}}></li>
+                    </ul>
+                </Col>
+                <Col>
+                <FormRange min = ".1" max= "5" step="0.1" onChange={(e) => {drawRange(e)}} className={`controller ${pointer ? 'scaleToOne' : ''}`}></FormRange>
+                </Col>
+            </Row>
+
             <div className={`drawing__tool ${ToolsOpen ? 'scaleToOne' : ''}`}>
                 <div className={`brush-btn`} onClick={(e) => {handleToggleFocused(e); pointerOpen(e);}}>
                     <svg version="1.1" id="brush-tip" className="brush-svg" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 80 80" style={{enableBackground:'new 0 0 80 80'}} xmlSpace="preserve">
@@ -101,15 +116,7 @@ const Tools = ({ handleCanvasOpen, handleCanvasClose, drawColor }) => {
                 <Col className={`palette ${ToolsOpen ? 'scaleToOne' : ''} ${Focused ? 'btnFocused' : ''}`} onClick={(e) => {toggleForms(e.target); toggleFocused(e);}}><FontAwesomeIcon icon={faPalette} /></Col>
                 <Col className={`new-layer ${ToolsOpen ? 'scaleToOne' : ''}`}><FontAwesomeIcon icon={faFile} /></Col>
             </Row>
-            <ul className={`color ${ColorOpen ? 'scaleToOne' : ''}`}>
-                <li className='colors' style={{ backgroundColor:'#E17055' }} onClick={(e) => {drawColor(e)}}></li>
-                <li className='colors' style={{ backgroundColor:'#FDCB6E' }} onClick={(e) => {drawColor(e)}}></li>
-                <li className='colors' style={{ backgroundColor:'#00B894' }} onClick={(e) => {drawColor(e)}}></li>
-                <li className='colors' style={{ backgroundColor:'#2F61D2' }} onClick={(e) => {drawColor(e)}}></li>
-                <li className='colors' style={{ backgroundColor:'#6C5CE7' }} onClick={(e) => {drawColor(e)}}></li>
-            </ul>
-            <FormLabel></FormLabel>
-            <FormRange value={range} min="0" max="20" step="1" onChange={ramgetest} className={`controller ${pointer ? 'scaleToOne' : ''}`}></FormRange>
+
             <Row className='app'>
                 <div className='todo' onClick={() => { handleCanvasClose(); handleToolsClose(); }}><FontAwesomeIcon icon={faListUl} /></div>
                 <div className='draw' onClick={() => { handleCanvasOpen(); handleToolsOpen(); }}><FontAwesomeIcon icon={faPaintBrush} /></div>
