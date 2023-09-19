@@ -10,7 +10,7 @@ const Draw = forwardRef((props, ref) => {
     const [lineWidth, setLineWidth] = useState(2.5);
 
     // ... 다른 상태 변수들
-    useImperativeHandle(ref, () => ({
+    useImperativeHandle(ref, (drawColorSet) => ({
         initCanvas: () => {
             setTimeout(() => {
                 const canvas = canvasRef.current;
@@ -28,6 +28,10 @@ const Draw = forwardRef((props, ref) => {
                 }
             }, 10);
         },
+        colorChange: (color) => {
+            ctx.strokeStyle = color;
+        }
+
     }));
 
     const stopPainting = () => {

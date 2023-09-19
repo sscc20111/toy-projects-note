@@ -29,6 +29,7 @@ const storedArray = JSON.parse(storedArrayString);
     const [UserName, setUser] = useState(localStorage.getItem('UserName'));
     const [isRegisterFormVisible, setIsRegisterFormVisible] = useState(false);
     const [canvasOpen, setCanvasOpen] = useState(false);
+    // const [canvasColor, setCanvasColor] = useState(false);
     const childRef = useRef();
     
     const toggleForms = () => {
@@ -80,7 +81,13 @@ const storedArray = JSON.parse(storedArrayString);
         setCanvasOpen(false);
     };
 
-
+    const drawColor = (e) => {
+        const targetColor = e.target.style.backgroundColor;
+        drawColorSet(targetColor);
+    }
+    const drawColorSet = (targetColor) => {
+        childRef.current.colorChange(targetColor);
+    }
 
     return (
         <Container>
@@ -99,7 +106,7 @@ const storedArray = JSON.parse(storedArrayString);
                     <div className=''></div>
                 </Col>
                 <Col className={`drawcontainer ${canvasOpen ? 'show' : 'hide'}`} style={{padding: 0}}>
-                    <Draw ref={childRef}></Draw>
+                    <Draw ref={childRef} drawColorSet={drawColorSet}></Draw>
                 </Col>
                 <Col className='todolist__info'>
                     <header>
@@ -114,7 +121,7 @@ const storedArray = JSON.parse(storedArrayString);
                     </header>
                     <Weather />
                     <Clock type='todo' />
-                    <Tools canvasOpen={canvasOpen} handleCanvasOpen={handleCanvasOpen} handleCanvasClose={handleCanvasClose} />
+                    <Tools canvasOpen={canvasOpen} drawColor={drawColor} handleCanvasOpen={handleCanvasOpen} handleCanvasClose={handleCanvasClose} />
                 </Col>
             </Row>
         </Container>

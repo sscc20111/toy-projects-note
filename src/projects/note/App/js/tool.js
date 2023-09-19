@@ -10,7 +10,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faListUl, faPaintBrush, faSave, faPalette, faFile } from "@fortawesome/free-solid-svg-icons";
 
 
-const Tools = ({ handleCanvasOpen, handleCanvasClose }) => {
+const Tools = ({ handleCanvasOpen, handleCanvasClose, drawColor }) => {
     const [ToolsOpen, setToolsOpen] = useState(false);
     const [ColorOpen, setColorOpen] = useState(false);
     const [Focused, setFocused] = useState(false);
@@ -35,6 +35,15 @@ const Tools = ({ handleCanvasOpen, handleCanvasClose }) => {
     const handleToolsClose = () => {
         setToolsOpen(false);
     };
+
+    const ramgetest = () => {
+        console.log(e)
+    }
+
+    // const drawColorSet = (e) => {
+    //     const targetColor = e.target.style.backgroundColor;
+    //     drawColor(targetColor);
+    // }
 
 
 
@@ -93,14 +102,14 @@ const Tools = ({ handleCanvasOpen, handleCanvasClose }) => {
                 <Col className={`new-layer ${ToolsOpen ? 'scaleToOne' : ''}`}><FontAwesomeIcon icon={faFile} /></Col>
             </Row>
             <ul className={`color ${ColorOpen ? 'scaleToOne' : ''}`}>
-                <li className='colors'></li>
-                <li className='colors'></li>
-                <li className='colors'></li>
-                <li className='colors'></li>
-                <li className='colors'></li>
+                <li className='colors' style={{ backgroundColor:'#E17055' }} onClick={(e) => {drawColor(e)}}></li>
+                <li className='colors' style={{ backgroundColor:'#FDCB6E' }} onClick={(e) => {drawColor(e)}}></li>
+                <li className='colors' style={{ backgroundColor:'#00B894' }} onClick={(e) => {drawColor(e)}}></li>
+                <li className='colors' style={{ backgroundColor:'#2F61D2' }} onClick={(e) => {drawColor(e)}}></li>
+                <li className='colors' style={{ backgroundColor:'#6C5CE7' }} onClick={(e) => {drawColor(e)}}></li>
             </ul>
             <FormLabel></FormLabel>
-            <FormRange className={`controller ${pointer ? 'scaleToOne' : ''}`}></FormRange>
+            <FormRange value={range} min="0" max="20" step="1" onChange={ramgetest} className={`controller ${pointer ? 'scaleToOne' : ''}`}></FormRange>
             <Row className='app'>
                 <div className='todo' onClick={() => { handleCanvasClose(); handleToolsClose(); }}><FontAwesomeIcon icon={faListUl} /></div>
                 <div className='draw' onClick={() => { handleCanvasOpen(); handleToolsOpen(); }}><FontAwesomeIcon icon={faPaintBrush} /></div>
