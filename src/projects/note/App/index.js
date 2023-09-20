@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef  } from 'react';
-import { Button, CloseButton, Container } from 'react-bootstrap';
+import { Button, CloseButton, Container, Stack } from 'react-bootstrap';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 
@@ -99,6 +99,49 @@ const storedArray = JSON.parse(storedArrayString);
     return (
         <Container>
             <Row>
+                <Col xs={7}>
+                    <Col className={`todolist ${canvasOpen ? 'hide' : 'show'}`}>
+                        <div className='alert__text'>
+                            <p>please type some words in the text box.</p>
+                            <CloseButton className='close' onClick={Popclose}></CloseButton>
+                        </div>
+                        <div className='lists'><Lists ListItem={ListData}/></div>
+                        <div className='completed__lists hide'></div>
+                        <div className='todolist__typebox'>
+                            <input type="text" className="todolist__input" value={ListText} onChange={(e) => setText(e.target.value)} />
+                            <Button className='todolist__btn' onClick={() => ListPush(ListText)}><FontAwesomeIcon icon={faPlus} /></Button>
+                        </div>
+                        <div className=''></div>
+                    </Col>
+                    <Col className={`drawcontainer ${canvasOpen ? 'show' : 'hide'}`} style={{padding: 0}}>
+                        <Draw ref={childRef} drawColorSet={drawColorSet} drawRange={drawRangeSet}></Draw>
+                    </Col>
+                </Col>
+                <Col className='row' style={{alignContent:'space-between'}}>
+                    <div>
+                        <Row className='todolist__infoo'>
+                            <header>
+                                <ImgApp />
+                                <h2 className='todo_user'>{UserName}</h2>
+                                {isRegisterFormVisible ? (
+                                    <FontAwesomeIcon icon={faCheck} className='fa-user-edit checked' onClick={UserNameDataChange} />
+                                    ) : (
+                                    <FontAwesomeIcon icon={faUserEdit} className='fa-user-edit' onClick={UserNameChange} />
+                                )}
+                                <input type='text' className={`userName__input ${isRegisterFormVisible ? 'show' : ''}`} value={dataUser} onChange={(e) => setData(e.target.value)}></input>
+                            </header>
+                        </Row>
+                        <Row className='mt-4'>
+                            <Weather />
+                            <Clock type='todo' />
+                        </Row>
+                    </div>
+                    <div>
+                        <Tools canvasOpen={canvasOpen} drawRange={drawRange} drawColor={drawColor} handleCanvasOpen={handleCanvasOpen} handleCanvasClose={handleCanvasClose} />
+                    </div>
+                </Col>
+            </Row>
+            {/* <Row>
                 <Col className={`todolist ${canvasOpen ? 'hide' : 'show'}`}>
                     <div className='alert__text'>
                         <p>please type some words in the text box.</p>
@@ -130,7 +173,7 @@ const storedArray = JSON.parse(storedArrayString);
                     <Clock type='todo' />
                     <Tools canvasOpen={canvasOpen} drawRange={drawRange} drawColor={drawColor} handleCanvasOpen={handleCanvasOpen} handleCanvasClose={handleCanvasClose} />
                 </Col>
-            </Row>
+            </Row> */}
         </Container>
     );
 }

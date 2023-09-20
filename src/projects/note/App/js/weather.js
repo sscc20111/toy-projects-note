@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import Col from 'react-bootstrap/Col';
 
 const API_KEY = "8e9220877c3c2baec33ccbf605141d1b";
 const COORDS = "coords";
@@ -61,12 +62,12 @@ const Weather = () => {
     }, []);
 
     return (
-        <div className='weather'>
+        <Col className='weather me-3'>
             <p className='temperature'>{todayTemp}℃</p>
             <h4>{place}</h4>
             <img src={require(`../img/${icon}.png`)}></img>
             <p>{description}</p>
-        </div>
+        </Col>
     );
 };
 

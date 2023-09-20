@@ -15,6 +15,7 @@ const Tools = ({ handleCanvasOpen, handleCanvasClose, drawColor, drawRange }) =>
     const [ColorOpen, setColorOpen] = useState(false);
     const [Focused, setFocused] = useState(false);
     const [pointer, setpointer] = useState(false);
+    const [isRegisterFormVisible, setIsRegisterFormVisible] = useState(true);
 
     const toggleForms = () => {
         setColorOpen(!ColorOpen);
@@ -29,11 +30,16 @@ const Tools = ({ handleCanvasOpen, handleCanvasClose, drawColor, drawRange }) =>
         setpointer(!pointer);
     };
     const handleToolsOpen = () => {
+        handleCanvasOpen();
         setToolsOpen(true);
+        setIsRegisterFormVisible(false);
+
     };
 
     const handleToolsClose = () => {
+        handleCanvasClose();
         setToolsOpen(false);
+        setIsRegisterFormVisible(true);
     };
 
     const ramgetest = (e) => {
@@ -47,9 +53,13 @@ const Tools = ({ handleCanvasOpen, handleCanvasClose, drawColor, drawRange }) =>
 
 
 
+
     return(
         <>
             <Row>
+                <Col>
+                    <FormRange min = ".1" max= "5" step="0.1" onChange={(e) => {drawRange(e)}} className={`controller ${pointer ? 'scaleToOne' : ''}`}></FormRange>
+                </Col>
                 <Col>
                     <ul className={`color ${ColorOpen ? 'scaleToOne' : ''}`}>
                         <li className='colors' style={{ backgroundColor:'#E17055' }} onClick={(e) => {drawColor(e)}}></li>
@@ -59,13 +69,10 @@ const Tools = ({ handleCanvasOpen, handleCanvasClose, drawColor, drawRange }) =>
                         <li className='colors' style={{ backgroundColor:'#6C5CE7' }} onClick={(e) => {drawColor(e)}}></li>
                     </ul>
                 </Col>
-                <Col>
-                <FormRange min = ".1" max= "5" step="0.1" onChange={(e) => {drawRange(e)}} className={`controller ${pointer ? 'scaleToOne' : ''}`}></FormRange>
-                </Col>
             </Row>
 
-            <div className={`drawing__tool ${ToolsOpen ? 'scaleToOne' : ''}`}>
-                <div className={`brush-btn`} onClick={(e) => {handleToggleFocused(e); pointerOpen(e);}}>
+            <Row className={`drawing__tool ${ToolsOpen ? 'scaleToOne' : ''}`}>
+                <Col style={{alignItems:'center', zIndex:9}} className={`brush-btn`} onClick={(e) => {handleToggleFocused(e); pointerOpen(e);}}>
                     <svg version="1.1" id="brush-tip" className="brush-svg" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 80 80" style={{enableBackground:'new 0 0 80 80'}} xmlSpace="preserve">
                             <path d="M43.77,31.21c0.28-0.21,0.56-0.45,0.81-0.72c1.22-1.27,2.64-3.71,2.47-8.1c-0.14-3.49-1.98-5.47-3.61-7.22
                                 c-1.56-1.67-2.79-2.99-2.38-5.27c0.04-0.22-0.05-0.45-0.22-0.59c-0.11-0.09-0.25-0.14-0.39-0.14c-0.08,0-0.16,0.02-0.24,0.05
@@ -78,8 +85,8 @@ const Tools = ({ handleCanvasOpen, handleCanvasClose, drawColor, drawRange }) =>
                             <path d="M40,68.2c1.51,0,2.76-1.16,2.86-2.67c0.07-0.94,1.63-23.16,1.63-26.37c0-1.6-0.35-4.01-0.73-6.17l-7.53-0.04
                                 c-0.38,2.16-0.73,4.58-0.73,6.2c0,3.25,1.56,25.43,1.63,26.37C37.24,67.04,38.49,68.2,40,68.2z" />
                     </svg>
-                </div>
-                <div className="fill-btn" onClick={handleToggleFocused}>
+                </Col>
+                <Col style={{alignItems:'center', zIndex:8}} className="fill-btn" onClick={handleToggleFocused}>
                     <svg version="1.1" id="paint-top" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" x="0px"
                         y="0px" viewBox="0 0 80 80" style={{enableBackground:'new 0 0 80 80'}} xmlSpace="preserve">
                     <path d="M56.91,19.83c0,0.92-0.39,1.75-1.02,2.33l-6.34,1.15l-2.47-0.01c-1.69,1.86-0.29,4.73-0.22,9.23c0.08,5.8-7.58,7.55-6.76,1
@@ -110,18 +117,19 @@ const Tools = ({ handleCanvasOpen, handleCanvasClose, drawColor, drawRange }) =>
                             C60.23,44.11,62.09,46.69,60.53,48.38z"/>
                     </g>
                     </svg>
-                </div>
-            </div>
-            <Row className={`palette__tool ${ToolsOpen ? 'scaleToOne' : ''}`}>
-                <Col className={`palette ${ToolsOpen ? 'scaleToOne' : ''} ${Focused ? 'btnFocused' : ''}`} onClick={(e) => {toggleForms(e.target); toggleFocused(e);}}><FontAwesomeIcon icon={faPalette} /></Col>
-                <Col className={`new-layer ${ToolsOpen ? 'scaleToOne' : ''}`}><FontAwesomeIcon icon={faFile} /></Col>
+                </Col>
+                <Col style={{zIndex:7}} className={`palette ${ToolsOpen ? 'scaleToOne' : ''} ${Focused ? 'btnFocused' : ''}`} onClick={(e) => {toggleForms(e.target); toggleFocused(e);}}><FontAwesomeIcon icon={faPalette} /></Col>
             </Row>
 
-            <Row className='app'>
-                <div className='todo' onClick={() => { handleCanvasClose(); handleToolsClose(); }}><FontAwesomeIcon icon={faListUl} /></div>
-                <div className='draw' onClick={() => { handleCanvasOpen(); handleToolsOpen(); }}><FontAwesomeIcon icon={faPaintBrush} /></div>
+            <Row xs="auto" className='app'>
+                <Col style={{zIndex:6}} className='todo' onClick={() => {  handleToolsClose(); }}><FontAwesomeIcon icon={faListUl} /></Col>
+                {isRegisterFormVisible ? (
+                    <Col style={{zIndex:5}} className='draw' onClick={() => {  handleToolsOpen(); }}><FontAwesomeIcon icon={faPaintBrush} /></Col>
+                ) : (
+                    <Col style={{zIndex:5}} className={`new-layer ${ToolsOpen ? 'scaleToOne' : ''}`}><FontAwesomeIcon icon={faFile} /></Col>
+                )}
+                <Col style={{zIndex:4}} className={`save-btn ${ToolsOpen ? 'scaleToOne' : ''}`}><FontAwesomeIcon icon={faSave} /></Col>
             </Row>
-            <div className={`save-btn ${ToolsOpen ? 'scaleToOne' : ''}`}><FontAwesomeIcon icon={faSave} /></div>
         </>
     ) 
 }
