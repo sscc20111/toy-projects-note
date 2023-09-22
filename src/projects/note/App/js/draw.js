@@ -34,6 +34,14 @@ const Draw = forwardRef((props, ref) => {
         rangeChange: (range) => {
             ctx.lineWidth = range;
         },
+        saveClick: () => {
+            const canvas = canvasRef.current;
+            const image = canvas.toDataURL('image/png');
+            const link = document.createElement('a');
+            link.href = image;
+            link.download = 'Your Masterpiece';
+            link.click();
+        }
 
     }));
 
@@ -57,9 +65,7 @@ const Draw = forwardRef((props, ref) => {
         }
     };
 
-    const handleCanvasClick = () => {
-        // handleCanvasClick 로직
-    };
+
 
     // const handleCM = (e) => {
         // preventDefault();
@@ -78,7 +84,6 @@ const Draw = forwardRef((props, ref) => {
             onMouseDown={startPainting}
             onMouseUp={stopPainting}
             onMouseLeave={stopPainting}
-            onClick={handleCanvasClick}
             // onContextMenu={handleCM}
         />
     );

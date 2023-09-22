@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 
 const API_KEY = "8e9220877c3c2baec33ccbf605141d1b";
@@ -62,11 +63,21 @@ const Weather = () => {
     }, []);
 
     return (
-        <Col className='weather me-3'>
-            <p className='temperature'>{todayTemp}℃</p>
-            <h4>{place}</h4>
-            <img src={require(`../img/${icon}.png`)}></img>
-            <p>{description}</p>
+        <Col className='weather me-3 py-3'>
+            <Row xs="auto"> 
+                <Col md={12}>
+                    <h4>{place}</h4>
+                </Col>
+                <Col md={12} className='mt-2'>
+                    <p className='temperature'>{todayTemp}℃</p>
+                </Col>
+                <Col className='ms-auto' style={{display:'flex'}}>
+                    <p className='sp' style={{marginTop:'auto', marginLeft:'auto'}}>{description}</p>
+                </Col>
+                <Col>
+                    <img src={require(`../img/${icon}.png`)}></img>
+                </Col>
+            </Row>
         </Col>
     );
 };

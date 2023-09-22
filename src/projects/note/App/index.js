@@ -95,6 +95,12 @@ const storedArray = JSON.parse(storedArrayString);
     const drawRangeSet = (targetvalue) => {
         childRef.current.rangeChange(targetvalue);
     }
+    const handleSaveClick = () => {
+        canvasSave()
+    }
+    const canvasSave = () => {
+        childRef.current.saveClick();
+    }
 
     return (
         <Container>
@@ -114,13 +120,13 @@ const storedArray = JSON.parse(storedArrayString);
                         <div className=''></div>
                     </Col>
                     <Col className={`drawcontainer ${canvasOpen ? 'show' : 'hide'}`} style={{padding: 0}}>
-                        <Draw ref={childRef} drawColorSet={drawColorSet} drawRange={drawRangeSet}></Draw>
+                        <Draw ref={childRef} canvasSave={() => {canvasSave()}} drawColorSet={drawColorSet} drawRange={drawRangeSet}></Draw>
                     </Col>
                 </Col>
                 <Col className='row' style={{alignContent:'space-between'}}>
                     <div>
                         <Row className='todolist__infoo'>
-                            <header>
+                            <header className='py-3'>
                                 <ImgApp />
                                 <h2 className='todo_user'>{UserName}</h2>
                                 {isRegisterFormVisible ? (
@@ -137,7 +143,7 @@ const storedArray = JSON.parse(storedArrayString);
                         </Row>
                     </div>
                     <div>
-                        <Tools canvasOpen={canvasOpen} drawRange={drawRange} drawColor={drawColor} handleCanvasOpen={handleCanvasOpen} handleCanvasClose={handleCanvasClose} />
+                        <Tools canvasOpen={canvasOpen} handleSaveClick={handleSaveClick} drawRange={drawRange} drawColor={drawColor} handleCanvasOpen={handleCanvasOpen} handleCanvasClose={handleCanvasClose} />
                     </div>
                 </Col>
             </Row>

@@ -554,7 +554,7 @@ header{
     right: 5%;
     bottom: 5%;
 }
-.weather p:last-child{
+.weather p.sp{
     font-size: 13px;
     color: #fff;
     bottom: 6%;

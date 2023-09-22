@@ -10,7 +10,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faListUl, faPaintBrush, faSave, faPalette, faFile } from "@fortawesome/free-solid-svg-icons";
 
 
-const Tools = ({ handleCanvasOpen, handleCanvasClose, drawColor, drawRange }) => {
+const Tools = ({ handleCanvasOpen, handleCanvasClose, drawColor, drawRange, handleSaveClick }) => {
     const [ToolsOpen, setToolsOpen] = useState(false);
     const [ColorOpen, setColorOpen] = useState(false);
     const [Focused, setFocused] = useState(false);
@@ -42,14 +42,11 @@ const Tools = ({ handleCanvasOpen, handleCanvasClose, drawColor, drawRange }) =>
         setIsRegisterFormVisible(true);
     };
 
-    const ramgetest = (e) => {
-        console.log(e.target.value)
-    }
 
-    // const drawColorSet = (e) => {
-    //     const targetColor = e.target.style.backgroundColor;
-    //     drawColor(targetColor);
-    // }
+
+    const SaveClick = () => {
+        handleSaveClick()
+    }
 
 
 
@@ -57,7 +54,7 @@ const Tools = ({ handleCanvasOpen, handleCanvasClose, drawColor, drawRange }) =>
     return(
         <>
             <Row>
-                <Col>
+                <Col style={{display:'flex'}} className='row'>
                     <FormRange min = ".1" max= "5" step="0.1" onChange={(e) => {drawRange(e)}} className={`controller ${pointer ? 'scaleToOne' : ''}`}></FormRange>
                 </Col>
                 <Col>
@@ -69,10 +66,11 @@ const Tools = ({ handleCanvasOpen, handleCanvasClose, drawColor, drawRange }) =>
                         <li className='colors' style={{ backgroundColor:'#6C5CE7' }} onClick={(e) => {drawColor(e)}}></li>
                     </ul>
                 </Col>
+                <Col></Col>
             </Row>
 
-            <Row className={`drawing__tool ${ToolsOpen ? 'scaleToOne' : ''}`}>
-                <Col style={{alignItems:'center', zIndex:9}} className={`brush-btn`} onClick={(e) => {handleToggleFocused(e); pointerOpen(e);}}>
+            <Row xs="auto" className={`drawing__tool ${ToolsOpen ? 'scaleToOne' : ''} my-3`}>
+                <Col style={{alignItems:'center', zIndex:9}} className='brush-btn me-3' onClick={(e) => {handleToggleFocused(e); pointerOpen(e);}}>
                     <svg version="1.1" id="brush-tip" className="brush-svg" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 80 80" style={{enableBackground:'new 0 0 80 80'}} xmlSpace="preserve">
                             <path d="M43.77,31.21c0.28-0.21,0.56-0.45,0.81-0.72c1.22-1.27,2.64-3.71,2.47-8.1c-0.14-3.49-1.98-5.47-3.61-7.22
                                 c-1.56-1.67-2.79-2.99-2.38-5.27c0.04-0.22-0.05-0.45-0.22-0.59c-0.11-0.09-0.25-0.14-0.39-0.14c-0.08,0-0.16,0.02-0.24,0.05
@@ -86,7 +84,7 @@ const Tools = ({ handleCanvasOpen, handleCanvasClose, drawColor, drawRange }) =>
                                 c-0.38,2.16-0.73,4.58-0.73,6.2c0,3.25,1.56,25.43,1.63,26.37C37.24,67.04,38.49,68.2,40,68.2z" />
                     </svg>
                 </Col>
-                <Col style={{alignItems:'center', zIndex:8}} className="fill-btn" onClick={handleToggleFocused}>
+                <Col style={{alignItems:'center', zIndex:8}} className="fill-btn me-3" onClick={handleToggleFocused}>
                     <svg version="1.1" id="paint-top" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" x="0px"
                         y="0px" viewBox="0 0 80 80" style={{enableBackground:'new 0 0 80 80'}} xmlSpace="preserve">
                     <path d="M56.91,19.83c0,0.92-0.39,1.75-1.02,2.33l-6.34,1.15l-2.47-0.01c-1.69,1.86-0.29,4.73-0.22,9.23c0.08,5.8-7.58,7.55-6.76,1
@@ -118,17 +116,17 @@ const Tools = ({ handleCanvasOpen, handleCanvasClose, drawColor, drawRange }) =>
                     </g>
                     </svg>
                 </Col>
-                <Col style={{zIndex:7}} className={`palette ${ToolsOpen ? 'scaleToOne' : ''} ${Focused ? 'btnFocused' : ''}`} onClick={(e) => {toggleForms(e.target); toggleFocused(e);}}><FontAwesomeIcon icon={faPalette} /></Col>
+                <Col style={{zIndex:7}} className={`palette me-3 ${ToolsOpen ? 'scaleToOne' : ''} ${Focused ? 'btnFocused' : ''}`} onClick={(e) => {toggleForms(e.target); toggleFocused(e);}}><FontAwesomeIcon icon={faPalette} /></Col>
+                <Col style={{zIndex:4}} className={`save-btn ${ToolsOpen ? 'scaleToOne' : ''}`} onClick={SaveClick}><FontAwesomeIcon icon={faSave} /></Col>
             </Row>
 
             <Row xs="auto" className='app'>
                 <Col style={{zIndex:6}} className='todo' onClick={() => {  handleToolsClose(); }}><FontAwesomeIcon icon={faListUl} /></Col>
                 {isRegisterFormVisible ? (
-                    <Col style={{zIndex:5}} className='draw' onClick={() => {  handleToolsOpen(); }}><FontAwesomeIcon icon={faPaintBrush} /></Col>
+                    <Col style={{zIndex:5}} className='draw mx-3' onClick={() => {  handleToolsOpen(); }}><FontAwesomeIcon icon={faPaintBrush} /></Col>
                 ) : (
-                    <Col style={{zIndex:5}} className={`new-layer ${ToolsOpen ? 'scaleToOne' : ''}`}><FontAwesomeIcon icon={faFile} /></Col>
+                    <Col style={{zIndex:5}} className={`new-layer mx-3 ${ToolsOpen ? 'scaleToOne' : ''}`}><FontAwesomeIcon icon={faFile} /></Col>
                 )}
-                <Col style={{zIndex:4}} className={`save-btn ${ToolsOpen ? 'scaleToOne' : ''}`}><FontAwesomeIcon icon={faSave} /></Col>
             </Row>
         </>
     ) 
