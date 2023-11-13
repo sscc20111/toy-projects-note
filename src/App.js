@@ -12,8 +12,8 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Main />}></Route>
-          <Route path="/projects/note" element={<Note />}></Route>
-          <Route path="/projects/note/Apppage" element={<NoteApp />}></Route>
+          <Route path="/projects/todo" element={<Note />}></Route>
+          <Route path="/projects/todo/Apppage" element={<NoteApp />}></Route>
         </Routes>
       </BrowserRouter>
     </div>
